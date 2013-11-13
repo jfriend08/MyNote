@@ -1,0 +1,82 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf390
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red196\green26\blue22;\red30\green29\blue255;\red217\green11\blue0;
+\red0\green68\blue254;\red28\green0\blue207;\red170\green13\blue145;}
+\margl1440\margr1440\vieww12800\viewh11700\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 printf (\cf2 "%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\t%s\\n"\cf0 ,\
+\cf3 GFR_COLUMN_NAME_NUM_INTER,\
+          GFR_COLUMN_NAME_INTER_MEAN_AB,\
+          GFR_COLUMN_NAME_INTER_MEAN_BA,\
+          GFR_COLUMN_NAME_PVALUE_AB,\
+          GFR_COLUMN_NAME_PVALUE_BA,\
+          GFR_COLUMN_NAME_NUM_INTRA1,\
+          GFR_COLUMN_NAME_NUM_INTRA2,\
+          GFR_COLUMN_NAME_FUSION_TYPE,\
+\cf4           GFR_COLUMN_NAME_NAME_TRANSCRIPT1,\
+          GFR_COLUMN_NAME_NUM_EXONS_TRANSCRIPT1, \
+          GFR_COLUMN_NAME_EXON_COORDINATES_TRANSCRIPT1,\
+          GFR_COLUMN_NAME_CHROMOSOME_TRANSCRIPT1,\
+          GFR_COLUMN_NAME_STRAND_TRANSCRIPT1,\
+          GFR_COLUMN_NAME_START_TRANSCRIPT1,\
+          GFR_COLUMN_NAME_END_TRANSCRIPT1,\cf0 \
+\cf5           GFR_COLUMN_NAME_NAME_TRANSCRIPT2,\
+          GFR_COLUMN_NAME_NUM_EXONS_TRANSCRIPT2,\
+          GFR_COLUMN_NAME_EXON_COORDINATES_TRANSCRIPT2,\
+          GFR_COLUMN_NAME_CHROMOSOME_TRANSCRIPT2,\
+          GFR_COLUMN_NAME_STRAND_TRANSCRIPT2,\
+          GFR_COLUMN_NAME_START_TRANSCRIPT2,\
+          GFR_COLUMN_NAME_END_TRANSCRIPT2,\cf0 \
+\cf4           GFR_COLUMN_NAME_INTER_READS,\
+          GFR_COLUMN_NAME_ID,\
+          GFR_COLUMN_NAME_READS_TRANSCRIPT1,\
+          GFR_COLUMN_NAME_READS_TRANSCRIPT2);\
+\cf0 \
+1      printf (\cf2 "%d\\t%.2f\\t%.2f\\t%.5f\\t%.5f\\t%d\\t%d\\t%s\\t"\cf0 ,\
+            getNumberOfInters ( currSuperInter ),\
+	    meanInterAB,meanInterBA,pvalueAB,pvalueBA,\
+            superIntra1 ? getNumberOfIntras(superIntra1) : \cf6 0\cf0 ,\
+	    superIntra2 ? getNumberOfIntras(superIntra2) : \cf6 0\cf0 ,\
+            strEqual (currSuperInter->transcript1->chromosome,currSuperInter->transcript2->chromosome) ? \cf2 "cis"\cf0  : \cf2 "trans"\cf0 );\
+\
+2    printf (\cf2 "%s\\t%d\\t%s\\t%s\\t%c\\t%d\\t%d\\t"\cf0 ,\
+            currSuperInter->transcript1->name,\
+	    arrayMax (currSuperInter->transcript1->subIntervals),\
+	    exonCoordinates1,\
+	    currSuperInter->transcript1->chromosome,\
+	    currSuperInter->transcript1->strand,\
+	    currSuperInter->transcript1->start,\
+	    currSuperInter->transcript1->end);\
+\
+3	printf (\cf2 "%s\\t%d\\t%s\\t%s\\t%c\\t%d\\t%d\\t"\cf0 ,\
+            currSuperInter->transcript2->name,\
+	    arrayMax (currSuperInter->transcript2->subIntervals),\
+	    exonCoordinates2,\
+	    currSuperInter->transcript2->chromosome,\
+	    currSuperInter->transcript2->strand,\
+	    currSuperInter->transcript2->start,\
+	    currSuperInter->transcript2->end);\
+\
+4    \cf7 for\cf0  (j = \cf6 0\cf0 ; j < arrayMax (currSuperInter->inters); j++) \{\
+      currInter = arru (currSuperInter->inters,j,Inter*);\
+      printf (\cf2 "%d,%d,%d,%d,%d,%d,%d%s"\cf0 ,\
+              currInter->pairType,currInter->number1,currInter->number2,\
+              currInter->readStart1,currInter->readEnd1,\
+              currInter->readStart2,currInter->readEnd2, \
+              j < arrayMax (currSuperInter->inters) - \cf6 1\cf0  ? \cf2 "|"\cf0  : \cf2 "\\t"\cf0 );\
+    \}\
+\
+5    printf (\cf2 "%s_%05d\\t"\cf0 ,argv[\cf6 1\cf0 ],i + \cf6 1\cf0 );\
+    \cf7 for\cf0  (j = \cf6 0\cf0 ; j < arrayMax (currSuperInter->inters); j++) \{\
+      currInter = arru (currSuperInter->inters,j,Inter*);\
+      printf (\cf2 "%s%s"\cf0 ,currInter->read1,j < arrayMax (currSuperInter->inters) - \cf6 1\cf0  ? \cf2 "|"\cf0  : \cf2 "\\t"\cf0 );\
+    \}\
+    \cf7 for\cf0  (j = \cf6 0\cf0 ; j < arrayMax (currSuperInter->inters); j++) \{\
+      currInter = arru (currSuperInter->inters,j,Inter*);\
+      printf (\cf2 "%s%s"\cf0 ,currInter->read2,j < arrayMax (currSuperInter->inters) - \cf6 1\cf0  ? \cf2 "|"\cf0  : \cf2 "\\n"\cf0 );\
+    \}\
+\
+\
+}
